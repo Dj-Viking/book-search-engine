@@ -40,49 +40,49 @@
 
 ### backend
 
-* [] in server.js implement the apollo server and apply it to the express server as middleware
-* [] in auth.js update the auth middleware function to work with the graphql api
-* [] in schemas directory
-  - [] index.js: export typedefs and resolvers
-  - [] resolvers.js: define the query and mutation functionality to work with the mongoose models
-* [] typedefs.js: define necessary query and mutation types: 
-  - [] Query types: ```me``` which returns a ```User``` type
-  - [] Mutation types:
-    * [] ```login``` accepts an email and password as parameters, returns ```Auth``` type
-    * [] ```addUser``` accepts a username, email, password as parameters; returns ```Auth``` type
-    * [] ```saveBook``` accepts book parameters: 
-      - [] author's array, 
-      - [] description, 
-      - [] title, 
-      - [] bookId,
-      - [] image,
-      - [] link
-    * [] ```removeBook``` accepts a ```bookId``` as a parameter and returns a ```User``` type
-  - [] User type:
-    * [] _id
-    * [] username
-    * [] email
-    * [] bookCount
-    * [] savedBooks ([Book]) array of the book type
-  - [] Book type: 
-    * [] bookId (not the _id but the id returned from the google books api)
-    * [] authors - an array of strings may be more than one author
-    * [] description
-    * [] title
-    * [] image
-    * [] link
-  - [] Auth type:
-    * [] token
-    * [] [User] references user type
+* [x] in server.js implement the apollo server and apply it to the express server as middleware
+* [x] in auth.js update the auth middleware function to work with the graphql api
+* [x] in schemas directory
+  - [x] index.js: export typedefs and resolvers
+  - [x] resolvers.js: define the query and mutation functionality to work with the mongoose models
+* [x] typedefs.js: define necessary query and mutation types: 
+  - [x] Query types: ```me``` which returns a ```User``` type
+  - [x] Mutation types:
+    * [x] ```login``` accepts an email and password as parameters, returns ```Auth``` type
+    * [x] ```addUser``` accepts a username, email, password as parameters; returns ```Auth``` type
+    * [x] ```saveBook``` accepts book parameters: 
+      - [x] author's array, 
+      - [x] description, 
+      - [x] title, 
+      - [x] bookId,
+      - [x] imageLink,
+      - [x] link (canonicalVolumeLink) link on the image maybe or just a find out more text-link inside the card or something
+    * [x] ```removeBook``` accepts a ```bookId``` as a parameter and returns a ```User``` type
+  - [x] User type:
+    * [x] _id
+    * [x] username
+    * [x] email
+    * [x] bookCount
+    * [x] savedBooks ([Book]) array of the book type
+  - [x] Book type: 
+    * [x] bookId (not the _id but the id returned from the google books api)
+    * [x] authors - an array of strings may be more than one author
+    * [x] description
+    * [x] title
+    * [x] image (this is a link for an image source)
+    * [x] link (canonicalVolumeLink)
+  - [x] Auth type:
+    * [x] token
+    * [x] [User] references user type
 
 ### frontend
 
-* [] queries.js - holds query ```GET_ME``` which executes me query set up using apollo server
-* [] mutations.js: 
-  - [] ```LOGIN_USER``` will execute the ```loginUser``` mutation set up using apollo server
-  - [] ```ADD_USER``` will execute the addUser mutation
-  - [] ```SAVE_BOOK``` will execute the saveBook mutation
-  - [] ```REMOVE_BOOK``` executes removeBook mutation
+* [x] queries.js - holds query ```GET_ME``` which executes me query set up using apollo server
+* [x] mutations.js: 
+  - [x] ```LOGIN_USER``` will execute the ```loginUser``` mutation set up using apollo server
+  - [x] ```ADD_USER``` will execute the addUser mutation
+  - [x] ```SAVE_BOOK``` will execute the saveBook mutation
+  - [x] ```REMOVE_BOOK``` executes removeBook mutation
 
 * [] App.js: create Apollo Provider to make every request work with apollo server
 * [] SearchBooks.js: 
