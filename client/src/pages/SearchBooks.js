@@ -115,23 +115,37 @@ const SearchBooks = () => {
           {searchedBooks.map((book) => {
             return (
               <Card key={book.bookId} border='dark'>
-                {book.image ? (
-                  <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
-                ) : null}
+                {
+                  book.image 
+                  ? 
+                  (
+                    <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' />
+                  ) 
+                  : null
+                }
                 <Card.Body>
                   <Card.Title>{book.title}</Card.Title>
                   <p className='small'>Authors: {book.authors}</p>
                   <Card.Text>{book.description}</Card.Text>
-                  {Auth.loggedIn() && (
-                    <Button
-                      disabled={savedBookIds?.some((savedBookId) => savedBookId === book.bookId)}
-                      className='btn-block btn-info'
-                      onClick={() => handleSaveBook(book.bookId)}>
-                      {savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
-                        ? 'This book has already been saved!'
-                        : 'Save this Book!'}
-                    </Button>
-                  )}
+                  {
+                    Auth.loggedIn() && 
+                    (
+                      <Button
+                        disabled={
+                          savedBookIds?.some(
+                            (savedBookId) => savedBookId === book.bookId
+                          )
+                        }
+                        className='btn-block btn-info'
+                        onClick={() => handleSaveBook(book.bookId)}>
+                        {
+                          savedBookIds?.some((savedBookId) => savedBookId === book.bookId)
+                          ? 'This book has already been saved!'
+                          : 'Save this Book!'
+                        }
+                      </Button>
+                    )
+                  }
                 </Card.Body>
               </Card>
             );
