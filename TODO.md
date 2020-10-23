@@ -77,12 +77,12 @@
 
 ### frontend
 
-* [] queries.js - holds query ```GET_ME``` which executes me query set up using apollo server
-* [] mutations.js: 
-  - [] ```LOGIN_USER``` will execute the ```loginUser``` mutation set up using apollo server
-  - [] ```ADD_USER``` will execute the addUser mutation
-  - [] ```SAVE_BOOK``` will execute the saveBook mutation
-  - [] ```REMOVE_BOOK``` executes removeBook mutation
+* [x] queries.js - holds query ```GET_ME``` which executes me query set up using apollo server
+* [x] mutations.js: 
+  - [x] ```LOGIN_USER``` will execute the ```loginUser``` mutation set up using apollo server
+  - [x] ```ADD_USER``` will execute the addUser mutation
+  - [x] ```SAVE_BOOK``` will execute the saveBook mutation
+  - [x] ```REMOVE_BOOK``` executes removeBook mutation
 
 * [] App.js: create Apollo Provider to make every request work with apollo server
 * [] SearchBooks.js: 
