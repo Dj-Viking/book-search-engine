@@ -22,6 +22,7 @@ const typeDefs = gql `
     description: String
     title: String
     image: String
+    link: String
   }
   type Mutation {
     login(email: String!, password: String!): Auth
@@ -31,8 +32,10 @@ const typeDefs = gql `
       description: String!, 
       title: String!, 
       bookId: String!, 
-      image: String!
-    )
+      image: String!,
+      link: String!
+    ): User
+    removeBook(bookId: String!): User
   }
 `;
 
