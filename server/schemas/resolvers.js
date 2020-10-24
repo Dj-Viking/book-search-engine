@@ -52,14 +52,7 @@ const resolvers = {
           {_id: context.user._id},
           {
             $push: {
-              savedBooks: {
-                authors: args.authors,
-                bookId: args.bookId,
-                title: args.title,
-                description: args.description,
-                image: args.image,
-                link: args.link
-              }
+              savedBooks: {...args}
             }
           },
           { new: true }
