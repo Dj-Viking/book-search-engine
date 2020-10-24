@@ -45,19 +45,21 @@ const resolvers = {
       return { token, user };
     },
     saveBook: async (parent, args, context) => {
+      console.log(args);
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate
         (
           {_id: context.user._id},
           {
             $push: {
-              _id: args._id,
-              authors: args.authors,
-              bookId: args.bookId,
-              title: args.title,
-              description: args.description,
-              image: args.image,
-              link: args.link
+              savedBooks: {
+                authors: args.authors,
+                bookId: args.bookId,
+                title: args.title,
+                description: args.description,
+                image: args.image,
+                link: args.link
+              }
             }
           },
           { new: true }
@@ -75,16 +77,14 @@ const resolvers = {
           {_id: context.user._id},
           {
             $pull: {
-              authors: args.authors,
-              bookId: args.bookId,
-              title: args.title,
-              description: args.description,
-              image: args.image,
-              link: args.link
+              savedBooks: {
+                bookId: args.bookId,
+              }
             }
           },
           { new: true }
         );
+        return updatedUser;
       } else {
         throw new AuthenticationError('Must be logged in to do that.');
       }
