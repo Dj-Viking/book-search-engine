@@ -6,7 +6,7 @@ const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth.js');
 
 const db = require('./config/connection');
-const routes = require('./routes');
+//const routes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -50,7 +50,7 @@ app.get('*', (req, res) => {
   );
 });
 
-app.use(routes);
+//app.use(routes);
 
 db.once('open', () => {
   app.listen(PORT, () =>  {

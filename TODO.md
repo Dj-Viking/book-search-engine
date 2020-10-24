@@ -84,7 +84,7 @@
   - [x] ```SAVE_BOOK``` will execute the saveBook mutation
   - [x] ```REMOVE_BOOK``` executes removeBook mutation
 
-* [] App.js: create Apollo Provider to make every request work with apollo server
+* [x] App.js: create Apollo Provider to make every request work with apollo server
 * [] SearchBooks.js: 
   - [] use apollo ```useMutation()``` Hook to execute the ```SAVE_BOOK``` mutation in the ```handleSaveBook()``` function instead of the ```saveBook()``` function imported from the api file
   - [] keep logic for saving book's ID to the state in the try catch block

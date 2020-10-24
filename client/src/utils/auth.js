@@ -5,7 +5,13 @@ import decode from 'jwt-decode';
 class AuthService {
   // get user data
   getProfile() {
-    return decode(this.getToken());
+    try {
+      const decoded = decode(this.getToken());
+      console.log(decoded);
+      return decoded;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   // check if user's logged in
@@ -21,7 +27,9 @@ class AuthService {
       const decoded = decode(token);
       if (decoded.exp < Date.now() / 1000) {
         return true;
-      } else return false;
+      } else {
+        return false;
+      }  
     } catch (err) {
       return false;
     }
@@ -29,7 +37,8 @@ class AuthService {
 
   getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+    const tokenString = localStorage.getItem('id_token');
+    return tokenString;
   }
 
   login(idToken) {
