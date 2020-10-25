@@ -41,8 +41,7 @@ const resolvers = {
         {
           email: args.email
         }
-      )
-      .select('-__v -password');
+      );
       if (!user) {
         throw new AuthenticationError('Incorrect Credentials.');
       }
