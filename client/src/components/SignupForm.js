@@ -46,9 +46,10 @@ const SignupForm = () => {
       (
         {
           variables: {
-            username: userFormData.username,
-            email: userFormData.email,
-            password: userFormData.password
+            // username: userFormData.username,
+            // email: userFormData.email,
+            // password: userFormData.password
+            ...userFormData
           }
         }
       );

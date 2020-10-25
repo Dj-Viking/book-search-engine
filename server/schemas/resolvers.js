@@ -13,11 +13,20 @@ const resolvers = {
           }
         )
         .select('-__v -password')
-        .select('books');
         return userData;
       } else {
         throw new AuthenticationError('Not logged in.')
       }
+    },
+    user: async (parent, args, context) => {
+      const user = await User.findOne
+      (
+        {
+          username: args.username
+        }
+      )
+      .select('-__v -password')
+      return user;
     }
   },
   Mutation: {
@@ -41,7 +50,7 @@ const resolvers = {
         throw new AuthenticationError('Incorrect Credentials.');
       }
       const token = signToken(user);
-      console.log(token);
+      //console.log(token);
       return { token, user };
     },
     saveBook: async (parent, args, context) => {
@@ -49,10 +58,10 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate
         (
-          {_id: context.user._id},
+          { _id: context.user._id },
           {
             $push: {
-              savedBooks: {...args}
+              savedBooks: { ...args }
             }
           },
           { new: true }
@@ -67,7 +76,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate
         (
-          {_id: context.user._id},
+          { _id: context.user._id },
           {
             $pull: {
               savedBooks: {

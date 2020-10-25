@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
-
+import { SAVE_BOOK } from '../utils/mutations.js';
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 
 const SearchBooks = () => {
   // create state for holding returned google api data
-  const [searchedBooks, setSearchedBooks] = useState([]);
+  const [searchedBooksState, setsearchedBooksState] = useState([]);
   // create state for holding our search field data
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInputState, setsearchInputState] = useState('');
 
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
@@ -24,12 +24,12 @@ const SearchBooks = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    if (!searchInput) {
+    if (!searchInputState) {
       return false;
     }
 
     try {
-      const response = await searchGoogleBooks(searchInput);
+      const response = await searchGoogleBooks(searchInputState);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
@@ -45,18 +45,20 @@ const SearchBooks = () => {
         image: book.volumeInfo.imageLinks?.thumbnail || '',
         link: book.volumeInfo.canonicalVolumeLink
       }));
-
-      setSearchedBooks(bookData);
-      setSearchInput('');
+      console.log(bookData);
+      setsearchedBooksState(bookData);
+      setsearchInputState('');
     } catch (err) {
       console.error(err);
     }
   };
 
+
+
   // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
-    // find the book in `searchedBooks` state by the matching id
-    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
+    // find the book in `searchedBooksState` state by the matching id
+    const bookToSave = searchedBooksState.find((book) => book.bookId === bookId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -66,11 +68,12 @@ const SearchBooks = () => {
     }
 
     try {
-      const response = await saveBook(bookToSave, token);
+      // const response = await saveBook(bookToSave, token);
 
-      if (!response.ok) {
-        throw new Error('something went wrong!');
-      }
+      // if (!response.ok) {
+      //   throw new Error('something went wrong!');
+      // }
+      
 
       // if book successfully saves to user's account, save book id to state
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
@@ -88,9 +91,9 @@ const SearchBooks = () => {
             <Form.Row>
               <Col xs={12} md={8}>
                 <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
+                  name='searchInputState'
+                  value={searchInputState}
+                  onChange={(e) => setsearchInputState(e.target.value)}
                   type='text'
                   size='lg'
                   placeholder='Search for a book'
@@ -109,16 +112,19 @@ const SearchBooks = () => {
       <Container>
         <h2>
           {
-            searchedBooks.length
-            ? `Viewing ${searchedBooks.length} results:`
+            searchedBooksState.length
+            ? `Viewing ${searchedBooksState.length} results:`
             : 'Search for a book to begin'
           }
         </h2>
         <CardColumns>
           {
-            searchedBooks.map((book) => {
+            searchedBooksState.map((book) => {
               return (
-                <Card key={book.bookId} border='dark'>
+                <Card 
+                  key={book.bookId} 
+                  border='dark'
+                >
                   {
                     book.image 
                     ? 
