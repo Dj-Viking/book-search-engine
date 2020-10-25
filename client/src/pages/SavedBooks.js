@@ -125,7 +125,7 @@ const SavedBooks = () => {
                         rel="noreferrer noopener"
                         target="_blank"
                       > 
-                        link
+                        {' '} link
                       </a>
                     </Card.Title>
                     <p className='medium'>Authors: {book.authors.join(', ')}</p>
