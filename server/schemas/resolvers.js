@@ -41,7 +41,8 @@ const resolvers = {
         {
           email: args.email
         }
-      );
+      )
+      .select('-__v -password');
       if (!user) {
         throw new AuthenticationError('Incorrect Credentials.');
       }
@@ -65,7 +66,8 @@ const resolvers = {
             }
           },
           { new: true }
-        );
+        )
+        .select('-__v -password');
         console.log(updatedUser);
         return updatedUser;
       } else {
@@ -85,7 +87,9 @@ const resolvers = {
             }
           },
           { new: true }
-        );
+        )
+        .select('-__v -password');
+        console.log(updatedUser);
         return updatedUser;
       } else {
         throw new AuthenticationError('Must be logged in to do that.');

@@ -85,14 +85,14 @@
   - [x] ```REMOVE_BOOK``` executes removeBook mutation
 
 * [x] App.js: create Apollo Provider to make every request work with apollo server
-* [] SearchBooks.js: 
-  - [] use apollo ```useMutation()``` Hook to execute the ```SAVE_BOOK``` mutation in the ```handleSaveBook()``` function instead of the ```saveBook()``` function imported from the api file
+* [x] SearchBooks.js: 
+  - [x] use apollo ```useMutation()``` Hook to execute the ```SAVE_BOOK``` mutation in the ```handleSaveBook()``` function instead of the ```saveBook()``` function imported from the api file
   - [x] keep logic for saving book's ID to the state in the try catch block
-* [] SavedBooks.js
+* [x] SavedBooks.js
   - [x] Remove the ```useEffect()``` hook that sets the state for ```UserData```
-  - [] use ```useQuery()``` hook to execute the ```GET_ME``` query on load and save it to a variable named ```userData```
-  - [] use ```useMutation()``` hook to execute the ```REMOVE_BOOK``` mutation in ```handleDeleteBook()``` function instead of ```deleteBook()``` imported from the api file
-  - [] keep ```removeBookId()``` in place though
+  - [x] use ```useQuery()``` hook to execute the ```GET_ME``` query on load and save it to a variable named ```userData```
+  - [x] use ```useMutation()``` hook to execute the ```REMOVE_BOOK``` mutation in ```handleDeleteBook()``` function instead of ```deleteBook()``` imported from the api file
+  - [x] keep ```removeBookId()``` in place though
 * [x] SignupForm.js:
   - [x] replace the ```addUser()``` functionality imported and use ```ADD_USER``` mutation instead
 * [x] LoginForm.js:

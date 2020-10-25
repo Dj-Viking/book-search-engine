@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap';
 import { QUERY_ME } from '../utils/queries.js';
 import { REMOVE_BOOK } from '../utils/mutations.js';
@@ -16,16 +16,45 @@ const SavedBooks = () => {
       variables: { username: Auth.getProfile().data.username }
     }
   );
+  //set up remove_book mutation
+  const [removeBook] = useMutation
+  (
+    REMOVE_BOOK,
+    {
+      update(cache, { data: { removeBook }})
+      {
+        try {
+          //read what's currently in cache 
+          //could potentially not exist yet, so wrap in trycatch
+          const { me } = cache.readQuery({ query: QUERY_ME });
+          console.log(me);          
+          //update the me object's cache, showing new set of saved books
+          cache.writeQuery
+          (
+            {
+              query: QUERY_ME,
+              data: {
+                me: {...me}
+              }
+            }
+          );
+        } catch(error) {
+          console.error(error);
+        }
+      }
+    }
+  );
   const userData = data?.me || data?.user || {};
-  console.log(loading);
-  console.log(userData);
+  console.log("loading", loading);
+  //console.log(userData);
 
   if (loading) {
-    return <div>Loading...</div>
+    return <h1>Loading...</h1>
   }
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
+    console.log(bookId);
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -33,9 +62,17 @@ const SavedBooks = () => {
     }
 
     try {
-
+      const updatedUser = await removeBook
+      (
+        {
+          variables: {bookId}
+        }
+      );
+      console.log(updatedUser);
       // upon success, remove book's id from localStorage
-      removeBookId(bookId);
+      if (updatedUser) {
+        removeBookId(bookId);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -68,6 +105,7 @@ const SavedBooks = () => {
                     <a
                       href={book.link}
                       rel="noreferrer noopener"
+                      target="_blank"
                     >
                       <Card.Img 
                         src={book.image} 
@@ -79,7 +117,18 @@ const SavedBooks = () => {
                   }
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
-                    <p className='small'>Authors: {book.authors}</p>
+                    {'\n'}
+                    <Card.Title>
+                      For more info on this book click this
+                      <a
+                        href={book.link}
+                        rel="noreferrer noopener"
+                        target="_blank"
+                      > 
+                        link
+                      </a>
+                    </Card.Title>
+                    <p className='medium'>Authors: {book.authors.join(', ')}</p>
                     <Card.Text>{book.description}</Card.Text>
                     <Button 
                       className='btn-block btn-danger' 
