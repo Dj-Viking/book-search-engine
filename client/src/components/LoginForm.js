@@ -17,26 +17,23 @@ const LoginForm = () => {
     console.log(userFormData);
   };
 
-  const [login, { error }] = useMutation(LOGIN_USER);
+  const [login] = useMutation(LOGIN_USER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // check if form has everything (as per react-bootstrap docs)
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
+    //check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
     try {
       const { data } = await login
       (
         {
-          variables: {
-            email: userFormData.email,
-            password: userFormData.password
-          }
+          variables: {...userFormData}
         }
       );
       console.log(data);

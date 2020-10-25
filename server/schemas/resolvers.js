@@ -13,11 +13,20 @@ const resolvers = {
           }
         )
         .select('-__v -password')
-        .select('books');
         return userData;
       } else {
         throw new AuthenticationError('Not logged in.')
       }
+    },
+    user: async (parent, args, context) => {
+      const user = await User.findOne
+      (
+        {
+          username: args.username
+        }
+      )
+      .select('-__v -password')
+      return user;
     }
   },
   Mutation: {
@@ -32,7 +41,8 @@ const resolvers = {
         {
           email: args.email
         }
-      );
+      )
+      .select('-__v -password');
       if (!user) {
         throw new AuthenticationError('Incorrect Credentials.');
       }
@@ -41,7 +51,7 @@ const resolvers = {
         throw new AuthenticationError('Incorrect Credentials.');
       }
       const token = signToken(user);
-      console.log(token);
+      //console.log(token);
       return { token, user };
     },
     saveBook: async (parent, args, context) => {
@@ -49,21 +59,15 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate
         (
-          {_id: context.user._id},
+          { _id: context.user._id },
           {
             $push: {
-              savedBooks: {
-                authors: args.authors,
-                bookId: args.bookId,
-                title: args.title,
-                description: args.description,
-                image: args.image,
-                link: args.link
-              }
+              savedBooks: { ...args }
             }
           },
           { new: true }
-        );
+        )
+        .select('-__v -password');
         console.log(updatedUser);
         return updatedUser;
       } else {
@@ -74,7 +78,7 @@ const resolvers = {
       if (context.user) {
         const updatedUser = await User.findOneAndUpdate
         (
-          {_id: context.user._id},
+          { _id: context.user._id },
           {
             $pull: {
               savedBooks: {
@@ -83,7 +87,9 @@ const resolvers = {
             }
           },
           { new: true }
-        );
+        )
+        .select('-__v -password');
+        console.log(updatedUser);
         return updatedUser;
       } else {
         throw new AuthenticationError('Must be logged in to do that.');
